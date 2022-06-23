@@ -3,3 +3,35 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+body {
+    background-color: darkgrey;
+}
+
+#ball, #player {
+    position: absolute;
+}
+
+#blocks {
+    background-color: gray;
+}
+
+#ball {
+    background-color: red;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+
+    top: 500px;
+    right: calc(50% - 10px);
+}
+
+#player {
+    background-color: blue;
+    border-radius: 4px;
+    width: 100px;
+    height: 20px;
+
+    top: 600px;
+    right: calc(50% - 50px);
+}
