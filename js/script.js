@@ -1,36 +1,58 @@
-const coord = {
-    x: 0,
-    y: 0
-}
-
 const ball = {
-    pos: coord,
+    pos: {x: 0, y: 0},
     radius: 0
 }
 
+const player = {
+    pos: {x: 0, y: 0},
+    left_top: {x: 0, y: 0},
+    left_bottom: {x: 0, y: 0},
+    right_top: {x: 0, y: 0},
+    right_bottom: {x: 0, y: 0}
+}
+
 const block = {
-    pos: coord,
-    left_top: coord,
-    left_bottom: coord,
-    right_top: coord,
-    right_bottom: coord
+    pos: {x: 0, y: 0},
+    left_top: {x: 0, y: 0},
+    left_bottom: {x: 0, y: 0},
+    right_top: {x: 0, y: 0},
+    right_bottom: {x: 0, y: 0}
 }
 
 const world_border = {
-    left_top: coord,
-    left_bottom: coord,
-    right_top: coord,
-    right_bottom: coord
+    left_top: {x: 0, y: 0},
+    left_bottom: {x: 0, y: 0},
+    right_top: {x: 0, y: 0},
+    right_bottom: {x: 0, y: 0}
 }
-
-console.log(coord);
-console.log(ball);
-console.log(block);
 
 function checkCollision() {}
 
+let gameScreenDoc = document.getElementById("gamescreen");
+let playerDoc = document.getElementById("player");
+let ballDoc = document.getElementById("ball");
+let playerMovespeed = 10;
+let playerMovedir = 0;
 
-let moving = 0;
+// Posiciona o jogador e a bola
+player.pos.x = 334;
+player.pos.y = 390;
+
+ball.pos.x = 374;
+ball.pos.y = 340;
+
+// Pega as bounds da tela
+world_border.left_top.x = 0;
+world_border.left_top.y = 0;
+
+world_border.left_bottom.x = 0;
+world_border.left_bottom.y = 432;
+
+world_border.right_top.x = 768;
+world_border.right_top.y = 0;
+
+world_border.right_bottom.x = 768;
+world_border.right_bottom.y = 432;
 
 // Input de controles
 document.addEventListener('keydown', function(event) {
@@ -40,14 +62,14 @@ document.addEventListener('keydown', function(event) {
 
     switch (event.key) {
         case "ArrowLeft":
-            moving = -1;
+            playerMovedir = -1;
         break;
         case "ArrowRight":
-            moving = 1;
+            playerMovedir = 1;
         break;
     }
 
-    console.log(moving);
+    UpdatePlayerPosition();
 });
 
 document.addEventListener('keyup', function(event) {
@@ -57,12 +79,22 @@ document.addEventListener('keyup', function(event) {
 
     switch (event.key) {
         case "ArrowLeft":
-            if (moving == -1) {moving = 0;}
+            if (playerMovedir == -1) {playerMovedir = 0;}
         break;
         case "ArrowRight":
-            if (moving == 1) {moving = 0;}
+            if (playerMovedir == 1) {playerMovedir = 0;}
         break;
     }
-
-    console.log(moving);
 });
+
+// Movimento do Jogador
+
+function UpdatePlayerPosition() {
+    if (playerMovedir === -1) {
+        player.pos.x -= playerMovespeed;
+    }
+    if (playerMovedir === 1) {
+        player.pos.x += playerMovespeed;
+    }
+    playerDoc.style.left = player.pos.x+"px";
+}
